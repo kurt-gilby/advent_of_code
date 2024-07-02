@@ -22,10 +22,8 @@ def get_current_floor(steps_list):
 
 def get_solution_part1():
     year = "2015"
-    day = "day_1"
-    question = "1"
-    file = "input.txt"
-    path = f"./{year}/{day}/{question}/{file}"
+    file = "input_day_1.txt"
+    path = f"./{year}/{file}"
     input_lines = get_input(path)
     items = get_input_items(input_lines)
     up_items = [item for item in items if item == "("]
@@ -37,10 +35,8 @@ def get_solution_part1():
 if __name__ == "__main__":
     get_solution_part1()
     year = "2015"
-    day = "day_1"
-    question = "1"
-    file = "input.txt"
-    path = f"./{year}/{day}/{question}/{file}"
+    file = "input_day_1.txt"
+    path = f"./{year}/{file}"
     input_lines = get_input(path)
     items = get_input_items(input_lines)
     pos = get_current_floor(items)
