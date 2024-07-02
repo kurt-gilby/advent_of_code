@@ -1,7 +1,7 @@
 def get_input(path):
     input_lines = []
     with open(path, "r") as file:
-        input_lines = file.readlines()
+        input_lines = file.read().splitlines()
     return input_lines
 
 
