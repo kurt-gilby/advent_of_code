@@ -1,8 +1,18 @@
-from main import get_input
-from solution_2015_day1 import get_input_items
+from helper import (
+    get_input,
+    get_smallest_of_three,
+    get_total_of_list_of_floats,
+    get_two_smallest_of_three,
+)
 
 
-def split_input_items_to_demensions(items_list, split_char):
+def split_input_items_to_demensions(
+    items_list: list[str], split_char: str
+) -> tuple[list[float], list[float], list[float]]:
+    """
+    Takes an input like "2x4x5" and "3x15x70"
+    retruns the [2,3] , [4,15] and [5,70] as the lists with Lengths, Width and heights
+    """
     lengths = []
     widths = []
     heights = []
@@ -18,30 +28,13 @@ def split_input_items_to_demensions(items_list, split_char):
     return lengths, widths, heights
 
 
-def get_smallest_of_three(x, y, z):
-    if x <= y and x <= z:
-        return x
-    if y <= x and y <= z:
-        return y
-    if z <= x and z <= y:
-        return z
-
-
-def get_two_smallest_of_three(x, y, z):
-    smallest = get_smallest_of_three(x, y, z)
-    next_smallest = 99999999999999999999999999
-    if smallest == x:
-        next_smallest = get_smallest_of_three(next_smallest, y, z)
-        return smallest, next_smallest
-    if smallest == y:
-        next_smallest = get_smallest_of_three(x, next_smallest, z)
-        return smallest, next_smallest
-    if smallest == z:
-        next_smallest = get_smallest_of_three(x, y, next_smallest)
-        return smallest, next_smallest
-
-
-def get_wrapping_needed(lengths, widths, heights):
+def get_wrapping_needed(
+    lengths: list[float], widths: list[float], heights: list[float]
+) -> list[float]:
+    """
+    Takes the list of lengths, widths and heigths of cuboid objects.
+    Returns the list of warpping needed for each object where wrapping needed = 2 * (lw + wh + hl) + slack where slack is the area of the smallest side
+    """
     wrapping_needed = []
     for idx, d in enumerate(lengths):
         l = d
@@ -59,22 +52,35 @@ def get_wrapping_needed(lengths, widths, heights):
     return wrapping_needed
 
 
-def get_total_wrapping_needed(wrapping_needed_list):
-    tot = 0
-    for warp in wrapping_needed_list:
-        tot += warp
+def get_total_wrapping_needed(wrapping_needed_list: list[float]) -> float:
+    """
+    Takes the wrapping needed list
+    Returns the total of the list.
+    """
+    tot = get_total_of_list_of_floats(wrapping_needed_list)
     return tot
 
 
-def sloved_get_total_wrapping_needed(path):
+def sloved_get_total_wrapping_needed(path: str) -> float:
+    """
+    Takes the input as a file path with the list of dimensions of all the gifts
+    Returns the total wrapping paper needed is square feet.
+    """
     input_lines = get_input(path)
     lengths, widths, heights = split_input_items_to_demensions(input_lines, "x")
     wrapping_needed = get_wrapping_needed(lengths, widths, heights)
     total = get_total_wrapping_needed(wrapping_needed)
     print(f"Total wrapping needed: {total}")
+    return total
 
 
-def get_ribbon_needed(lengths, widths, heights):
+def get_ribbon_needed(
+    lengths: list[float], widths: list[float], heights: list[float]
+) -> list[float]:
+    """
+    Takes the list of lengths, widths and heigths of cuboid objects.
+    Returns the list of ribbon needed for each object where ribbon needed = l * w * h  + slack where slack is the perimeter of the smallest side
+    """
     ribbon_needed = []
     for idx, d in enumerate(lengths):
         l = d
@@ -89,19 +95,26 @@ def get_ribbon_needed(lengths, widths, heights):
     return ribbon_needed
 
 
-def get_total_ribbon_needed(ribbon_needed):
-    tot = 0
-    for ribbon in ribbon_needed:
-        tot += ribbon
+def get_total_ribbon_needed(ribbon_needed: list[float]) -> float:
+    """
+    Takes the ribbon needed list
+    Returns the total of the list.
+    """
+    tot = get_total_of_list_of_floats(ribbon_needed)
     return tot
 
 
-def sloved_get_total_ribbon_needed(path):
+def sloved_get_total_ribbon_needed(path: str) -> float:
+    """
+    Takes the input as a file path with the list of dimensions of all the gifts
+    Returns the total ribbon needed in cubic feet.
+    """
     input_lines = get_input(path)
     lengths, widths, heights = split_input_items_to_demensions(input_lines, "x")
     ribbon_needed = get_ribbon_needed(lengths, widths, heights)
     total = get_total_ribbon_needed(ribbon_needed)
     print(f"Total ribbon needed: {total}")
+    return total
 
 
 if __name__ == "__main__":
