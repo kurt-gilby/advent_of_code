@@ -1,3 +1,11 @@
+import hashlib
+
+
+def generate_md5_hash(input_string):
+    md5_object = hashlib.md5(input_string.encode())
+    return md5_object.hexdigest()
+
+
 def get_total_of_list_of_floats(list_of_floats: list[float]) -> float:
     """
     Takes a list of floats
