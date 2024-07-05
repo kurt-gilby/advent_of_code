@@ -1,6 +1,163 @@
 import hashlib
 
 
+def get_mirror_substring(Input_list: list[str]) -> list[str]:
+    """
+    Takes a list of three char long strings
+    For each string checks if the 1st and 3rd element is the same and the middle element if different.
+    Returns list of sub-strings which match the above criteria.
+    """
+    mirror_substring_list = []
+
+    for sub in Input_list:
+        if sub[0] == sub[2] and sub[0] != sub[1] and sub[1] != sub[2]:
+            mirror_substring_list.append(sub)
+    if len(mirror_substring_list) == 0:
+        return None
+    return mirror_substring_list
+
+
+def get_substring_three_char_long(Input_string: str) -> list[str]:
+    """
+    Takes a string
+    Gets all three character length sub-string sequencially and add to list
+    Returns list of sub-strings.
+    """
+    sub_string_list = []
+    for i in range(len(Input_string) - 2):
+        sub_string = Input_string[i] + Input_string[i + 1] + Input_string[i + 2]
+        sub_string_list.append(sub_string)
+    return sub_string_list
+
+
+def get_element_if_repeat_more_than_two_times(check_string: str) -> list[str]:
+    """
+    Takes a string
+    Gets list of elements that repeat in sequece more than 2 times
+    Returns list of elements.
+    """
+    more_than_two = []
+    for i in range(len(check_string) - 2):
+        if (
+            check_string[i] == check_string[i + 1]
+            and check_string[i + 1] == check_string[i + 2]
+        ):
+            more_than_two.append(check_string[i])
+    if len(more_than_two) == 0:
+        return None
+    return more_than_two
+
+
+def get_index_of_pair_of_elements(
+    list_of_elements: list[str], index_string: str
+) -> list[str]:
+    """
+    Takes list of pair elements and the string to check indexs
+    Gets the list of all indexs for all the pairs.
+    Returns list of indexs.
+    """
+    list_of_indexs = []
+    for element in list_of_elements:
+        for i in range(len(index_string) - 1):
+            check_element = index_string[i] + index_string[i + 1]
+            if element == check_element:
+                list_of_indexs.append(str(i))
+                list_of_indexs.append(str(i + 1))
+    if len(list_of_indexs) == 0:
+        return None
+    return list_of_indexs
+
+
+def get_repeated_elements(list_of_elements: list[str]) -> list[str]:
+    """
+    Takes list of elements.
+    Checks the number of time an element repeats.
+    Returns list of elements that repeats more than once.
+    """
+    repeated = []
+    for i in range(len(list_of_elements)):
+        if list_of_elements[i] in repeated:
+            continue
+        count = list_of_elements.count(list_of_elements[i])
+        if count > 1:
+            repeated.append(list_of_elements[i])
+    if len(repeated) == 0:
+        return None
+    return repeated
+
+
+def get_all_pairs(string_to_extract: str) -> list[str]:
+    """
+    Takes a string.
+    Gets all pair of characters in a sequence.
+    Returns list of pair of characters in a sequence.
+    """
+    str_pairs = []
+    for i in range(len(string_to_extract) - 1):
+        str_pair = string_to_extract[i] + string_to_extract[i + 1]
+        str_pairs.append(str_pair)
+    if len(str_pairs) == 0:
+        return None
+    return str_pairs
+
+
+def get_vowels_in_string(string_to_check: str) -> dict[str:float]:
+    """
+    Takes a string.
+    identifies the vowels in the string.
+    Returns a Dict with vowels found as key and number of times found as values
+    """
+    vowels = ["a", "e", "i", "o", "u"]
+    vowels_dict = {"a": 0.0, "e": 0.0, "i": 0.0, "o": 0.0, "u": 0.0}
+
+    for vowel in vowels:
+        for item in string_to_check:
+            if vowel == item:
+                vowels_dict[vowel] += 1.0
+    return vowels_dict
+
+
+def get_sum_of_dict_values(dict_to_sum: dict[str:float]) -> float:
+    """
+    Takes a dictionary of the key value format of string: float.
+    Returns sum of all the values
+    """
+    total = sum(dict_to_sum.values())
+    return total
+
+
+def has_disallowed_string_list(
+    disallowed_list: list[str], string_to_check: str
+) -> bool:
+    """
+    Takes a list of substrings that are disallowed.
+    Checks if the string has any of the substrings.
+    Return True if the string does not have any of the substrings.
+    Returns False if the string has any of the substrings.
+    """
+    has = False
+    for item in disallowed_list:
+        if item in string_to_check:
+            has = True
+            return has
+    return has
+
+
+def has_double_letters_in_string(string_to_check: str) -> bool:
+    """
+    Takes a string.
+    checks if the string has any repeating characters,
+    Return True if the string has repeating characters.
+    Returns False if the string does not have repeating characters.
+    """
+    has = False
+    for i in range(len(string_to_check) - 1):
+        if string_to_check[i] == string_to_check[i + 1]:
+            has = True
+            return has
+    return has
+
+
 def generate_md5_hash(input_string):
     md5_object = hashlib.md5(input_string.encode())
     return md5_object.hexdigest()
